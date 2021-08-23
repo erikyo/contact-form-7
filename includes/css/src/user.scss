@@ -13,7 +13,46 @@ $wpcf7-spinner-color: lighten($wpcf7-dark-gray, 20%) !default;
 $wpcf7-spinner-size: 24px !default;
 $wpcf7-spinner-dot-size: 6px !default;
 $wpcf7-spinner-dot-margin: 4px !default;
-$wpcf7-spinner-dot-origin: $wpcf7-spinner-size * .5 - $wpcf7-spinner-dot-margin !default;
+$wpcf7-spinner-dot-origin: $wpcf7-spinner-size * .5 - $wpcf7-spinner-dot-margin;
+
+// the Contact Form 7 notices
+$notices:
+		('init','resetting','submitting') null,
+		('sent') #{$wpcf7-green},
+		('failed','aborted') #{$wpcf7-red},
+		('spam') #{$wpcf7-orange},
+		('invalid','unaccepted','payment-required') #{$wpcf7-yellow}
+;
+
+// the Notice class model
+@mixin notice($class) {
+		#{$class} {
+			.wpcf7-response-output { @content }
+		}
+}
+
+// Generate automatically the cf7 response notices from a list of (array) classnames + (string) color
+@mixin generate-response-output($notices) {
+
+		@each $types, $color in $notices {
+				// the comma separated class list
+				$classes: ();
+				@each $class in $types {
+						$classes: append($classes, "form." + $class, comma)
+				}
+
+				// Calls the notice mixin passing as content a color (if is not available the output notice will be hidden)
+				@include notice($classes) {
+					@if $color {
+						border-color: $color
+					} @else {
+						display: none
+					}
+				}
+
+		}
+}
+
 
 .wpcf7 {
 
@@ -36,30 +75,9 @@ $wpcf7-spinner-dot-origin: $wpcf7-spinner-size * .5 - $wpcf7-spinner-dot-margin 
 				border: 2px solid $wpcf7-blue;
 		}
 
-		form.init,
-		form.resetting,
-		form.submitting {
-				.wpcf7-response-output {display: none;}
-		}
 
-		form.sent {
-				.wpcf7-response-output {border-color: $wpcf7-green;}
-		}
-
-		form.failed,
-		form.aborted {
-				.wpcf7-response-output {border-color: $wpcf7-red;}
-		}
-
-		form.spam {
-				.wpcf7-response-output {border-color: $wpcf7-orange;}
-		}
-
-		form.invalid,
-		form.unaccepted,
-		form.payment-required {
-				.wpcf7-response-output {border-color: $wpcf7-yellow;}
-		}
+		// using the array of classes an colors generates the cf7 output notices
+		@include generate-response-output($notices);
 
 
 		// Control Wrap (the container of the input and the validation tip)
