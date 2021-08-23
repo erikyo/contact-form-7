@@ -12,6 +12,10 @@
 		"build:recaptcha": "wp-scripts build modules/recaptcha/src/index.js --output-path=modules/recaptcha",
 		"start:stripe": "wp-scripts start modules/stripe/src/index.js --output-path=modules/stripe",
 		"build:stripe": "wp-scripts build modules/stripe/src/index.js --output-path=modules/stripe",
+		"start:style": "wp-scripts start includes/css/src/styles.js --output-path=includes/css",
+		"build:style": "wp-scripts build includes/css/src/styles.js --output-path=includes/css",
+		"start:style-rtl": "wp-scripts start includes/css/src/styles-rtl.js --output-path=includes/css",
+		"build:style-rtl": "wp-scripts build includes/css/src/styles-rtl.js --output-path=includes/css",
 		"packages-update": "wp-scripts packages-update"
 	},
 	"repository": {

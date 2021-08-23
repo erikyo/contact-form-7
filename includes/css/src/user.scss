@@ -1,0 +1,182 @@
+// the default palette
+$wpcf7-white: #fff !default; // Blue
+$wpcf7-light-gray: #fbfbfc !default; // Light Gray 100
+$wpcf7-dark-gray: #23282d !default; // Dark Gray 800
+$wpcf7-blue: #00a0d2 !default; // Blue
+$wpcf7-green: #46b450 !default; // Green
+$wpcf7-red: #dc3232 !default; // Red
+$wpcf7-orange: #f56e28 !default; // Orange
+$wpcf7-yellow: #ffb900 !default; // Yellow
+
+// the Spinner settings
+$wpcf7-spinner-color: lighten($wpcf7-dark-gray, 20%) !default;
+$wpcf7-spinner-size: 24px !default;
+$wpcf7-spinner-dot-size: 6px !default;
+$wpcf7-spinner-dot-margin: 4px !default;
+$wpcf7-spinner-dot-origin: $wpcf7-spinner-size * .5 - $wpcf7-spinner-dot-margin !default;
+
+.wpcf7 {
+
+		.screen-reader-response {
+				position: absolute;
+				overflow: hidden;
+				clip: rect(1px, 1px, 1px, 1px);
+				clip-path: inset(50%);
+				height: 1px;
+				width: 1px;
+				margin: -1px;
+				padding: 0;
+				border: 0;
+				word-wrap: normal !important;
+		}
+
+		form .wpcf7-response-output {
+				margin: 2em 0.5em 1em;
+				padding: 0.2em 1em;
+				border: 2px solid $wpcf7-blue;
+		}
+
+		form.init,
+		form.resetting,
+		form.submitting {
+				.wpcf7-response-output {display: none;}
+		}
+
+		form.sent {
+				.wpcf7-response-output {border-color: $wpcf7-green;}
+		}
+
+		form.failed,
+		form.aborted {
+				.wpcf7-response-output {border-color: $wpcf7-red;}
+		}
+
+		form.spam {
+				.wpcf7-response-output {border-color: $wpcf7-orange;}
+		}
+
+		form.invalid,
+		form.unaccepted,
+		form.payment-required {
+				.wpcf7-response-output {border-color: $wpcf7-yellow;}
+		}
+
+
+		// Control Wrap (the container of the input and the validation tip)
+		&-form-control-wrap {
+				position: relative;
+		}
+
+
+		// Tip (show below the input when the form has invalid fields)
+		&-not-valid-tip {
+				color: $wpcf7-red;
+				font-size: 1em;
+				font-weight: normal;
+				display: block;
+
+				.use-floating-validation-tip & {
+						position: relative;
+						top: -2ex;
+						left: 1em;
+						z-index: 100;
+						border: 1px solid $wpcf7-red;
+						background: $wpcf7-white;
+						padding: .2em .8em;
+						width: 24em;
+				}
+		}
+
+
+		// Input tag style
+		input {
+
+				&[type="file"] {
+						cursor: pointer;
+				}
+
+				&[type="file"]:disabled {
+						cursor: default;
+				}
+
+				&[type="url"],
+				&[type="email"],
+				&[type="tel"] {
+						direction: ltr;
+				}
+
+				.wpcf7-submit:disabled {
+						cursor: not-allowed;
+				}
+		}
+
+}
+
+
+// List Item
+.wpcf7-list-item {
+		display: inline-block;
+		margin: 0 0 0 1em;
+
+		&::before,
+		&::after {
+				content: " ";
+		}
+}
+
+
+// the Ajax Spinner
+.wpcf7-spinner {
+		visibility: hidden;
+		display: inline-block;
+		background-color: $wpcf7-spinner-color;
+		opacity: .99; // force hardware acceleration
+		width: $wpcf7-spinner-size;
+		height: $wpcf7-spinner-size;
+		border: 0;
+		border-radius: 100%;
+		padding: 0;
+		margin: 0 $wpcf7-spinner-size;
+		position: relative;
+
+		form.submitting & {
+				visibility: visible;
+		}
+
+		&::before {
+				content: '';
+				position: absolute;
+				background-color: $wpcf7-light-gray;
+				top: $wpcf7-spinner-dot-margin;
+				left: $wpcf7-spinner-dot-margin;
+				width: $wpcf7-spinner-dot-size;
+				height: $wpcf7-spinner-dot-size;
+				border: 0;
+				border-radius: 100%;
+				transform-origin: $wpcf7-spinner-dot-origin $wpcf7-spinner-dot-origin;
+				animation-name: spin;
+				animation-duration: 1000ms;
+				animation-timing-function: linear;
+				animation-iteration-count: infinite;
+		}
+
+		@media (prefers-reduced-motion: reduce) {
+				&::before {
+						animation-name: blink;
+						animation-duration: 2000ms;
+				}
+		}
+}
+
+
+// Animations
+@keyframes spin {
+		from {transform: rotate(0deg);}
+		to {transform: rotate(360deg);}
+}
+
+@keyframes blink {
+		from {opacity: 0;}
+		50% {opacity: 1;}
+		to {opacity: 0;}
+}

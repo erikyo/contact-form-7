@@ -1,0 +1,1 @@
+import './user-rtl.scss';
