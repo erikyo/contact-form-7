@@ -1,0 +1,38 @@
+{
+	"name": "rocklobster-in/contact-form-7",
+	"description": "Contact Form 7",
+	"license": "GPL-3.0-or-later",
+	"type": "wordpress-plugin",
+	"authors": [
+		{
+			"name": "Takayuki Miyoshi",
+			"homepage": "https://profiles.wordpress.org/takayukister/"
+		}
+	],
+	"homepage": "https://wordpress.org/plugins/contact-form-7/",
+	"require-dev": {
+		"php": ">=7.4",
+		"friendsofphp/php-cs-fixer": "3.*",
+		"squizlabs/php_codesniffer": "^3",
+		"phpcompatibility/php-compatibility": "*",
+		"wp-coding-standards/wpcs": "^3.0",
+		"automattic/vipwpcs": "^3.0",
+		"phpcompatibility/phpcompatibility-wp": "*",
+		"phpunit/phpunit": "^9.6.13",
+		"wp-phpunit/wp-phpunit": "^5.9.5",
+		"yoast/phpunit-polyfills": "^1.1",
+		"dealerdirect/phpcodesniffer-composer-installer": "^0.7"
+	},
+	"scripts": {
+		"PHPCS": "vendor/bin/phpcs --standard=phpcs.ruleset.xml -s --report=full,summary,source",
+		"PHPCBF": "vendor/bin/phpcbf --standard=phpcs.ruleset.xml -s --report=full,summary,source",
+		"test": "vendor/bin/phpunit -c phpunit.xml.dist"
+	},
+	"minimum-stability": "dev",
+	"config": {
+		"allow-plugins": {
+			"dealerdirect/phpcodesniffer-composer-installer": true,
+			"phpstan/extension-installer": true
+		}
+	}
+}

@@ -1,0 +1,26 @@
+name: WordPress Check Action And WPCS
+
+on: pull_request
+
+jobs:
+  phpcs:
+    name: Check Coding Standards
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Run plugin check
+        uses: swissspidy/wp-plugin-check-action@v1
+
+      - name: WPCS check
+        uses: 10up/wpcs-action@stable
+        with:
+          standard: 'WordPress'
+          extra_args: '--report-json=./phpcs.json'
+          excludes: '.github/'
+      - name: Update summary
+        run: |
+          npx --yes github:10up/phpcs-json-to-md --path ./phpcs.json --output ./phpcs.md
+          cat phpcs.md >> $GITHUB_STEP_SUMMARY
+
+
