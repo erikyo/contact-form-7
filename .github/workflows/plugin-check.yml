@@ -1,0 +1,16 @@
+name: WordPress Plugin Check Action
+
+on: pull_request
+
+jobs:
+  phpcs:
+    name: Check Coding Standards
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Run plugin check
+        uses: swissspidy/wp-plugin-check-action@v1
+        with:
+          exclude-checks: |
+            plugin_review_phpcs

@@ -1,0 +1,102 @@
+<?xml version="1.0"?>
+<ruleset name="WordPress Coding Standards based custom ruleset for your plugin">
+	<description>Generally-applicable sniffs for WordPress plugins.</description>
+
+	<arg name="cache"/>
+
+	<!-- Set the memory limit to 256M.
+		 For most standard PHP configurations, this means the memory limit will temporarily be raised.
+		 Ref: https://github.com/squizlabs/PHP_CodeSniffer/wiki/Advanced-Usage#specifying-phpini-settings
+	-->
+	<ini name="memory_limit" value="256M"/>
+
+	<!-- How to scan -->
+	<!-- Usage instructions: https://github.com/squizlabs/PHP_CodeSniffer/wiki/Usage -->
+	<!-- Annotated ruleset: https://github.com/squizlabs/PHP_CodeSniffer/wiki/Annotated-ruleset.xml -->
+	<arg value="sp"/> <!-- Show sniff and progress -->
+
+	<arg name="basepath" value="."/>
+	<arg name="colors"/>
+	<arg name="parallel" value="75"/>
+	<arg name="extensions" value="php"/><!-- Enables parallel processing when available for faster results. -->
+
+	<!-- Rules: Check PHP version compatibility -->
+	<!-- https://github.com/PHPCompatibility/PHPCompatibility#sniffing-your-code-for-compatibility-with-specific-php-versions -->
+	<config name="testVersion" value="7.4-"/>
+
+	<!-- Rules: WordPress Coding Standards -->
+	<!-- https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards -->
+	<!-- https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards/wiki/Customizable-sniff-properties -->
+	<config name="minimum_supported_wp_version" value="5.6"/>
+
+	<rule ref="WordPress.WP.I18n">
+		<properties>
+			<property name="text_domain" type="array">
+				<element value="contact-form-7"/>
+			</property>
+		</properties>
+	</rule>
+
+	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
+		<properties>
+			<property name="prefixes" type="array">
+				<element value="wpcf7_"/>
+			</property>
+		</properties>
+	</rule>
+
+	<!-- WordPress coding standards -->
+	<rule ref="WordPress">
+		<!-- WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned -->
+		<!-- Check for alignment of double arrows in multiple-statement arrays. -->
+		<exclude name="WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned" />
+
+		<!-- WordPress.Arrays.ArrayDeclarationSpacing.ArrayItemNoNewLine -->
+		<!-- Check for array items not followed by a new line. -->
+		<exclude name="WordPress.Arrays.ArrayDeclarationSpacing.ArrayItemNoNewLine" />
+
+		<!-- PEAR.Functions.FunctionCallSignature.MultipleArguments -->
+		<!-- Check for function calls with multiple arguments on a single line. -->
+		<exclude name="PEAR.Functions.FunctionCallSignature.MultipleArguments" />
+
+		<!-- WordPress.Arrays.ArrayKeySpacingRestrictions.NoSpacesAroundArrayKeys -->
+		<!-- Check for spaces around array keys. -->
+		<exclude name="WordPress.Arrays.ArrayKeySpacingRestrictions.NoSpacesAroundArrayKeys" />
+
+		<!-- Squiz.Operators.ValidLogicalOperators.NotAllowed -->
+		<!-- Allow logical operator like AND and OR -->
+		<exclude name="Squiz.Operators.ValidLogicalOperators.NotAllowed" />
+
+		<!-- WordPress.Arrays.ArrayIndentation.ItemNotAligned -->
+		<!-- Check for aligned array items. -->
+		<exclude name="WordPress.Arrays.ArrayIndentation.ItemNotAligned" />
+
+		<!-- WordPress.WhiteSpace.ControlStructureSpacing.BlankLineAfterEnd -->
+		<!-- Check for a blank line after the end of control structures. -->
+		<exclude name="WordPress.WhiteSpace.ControlStructureSpacing.BlankLineAfterEnd" />
+
+		<!-- NormalizedArrays.Arrays.CommaAfterLast.FoundSingleLine -->
+		<!-- Check for a comma after the last item in a single-line array. -->
+		<exclude name="NormalizedArrays.Arrays.CommaAfterLast.FoundSingleLine" />
+
+		<!-- Universal.WhiteSpace.PrecisionAlignment.Found -->
+		<!-- Check for precision alignment. -->
+		<exclude name="Universal.WhiteSpace.PrecisionAlignment.Found" />
+	</rule>
+
+	<rule ref="WordPress-Docs"/>
+	<rule ref="WordPress-Extra" />
+
+	<!-- What to scan -->
+	<file>.</file>
+	<exclude-pattern>/.github/*</exclude-pattern>
+	<exclude-pattern>/.husky/*</exclude-pattern>
+	<exclude-pattern>/assets/*</exclude-pattern>
+	<exclude-pattern>/languages/*</exclude-pattern>
+	<exclude-pattern>/node_modules/*</exclude-pattern>
+	<exclude-pattern>/tests/*</exclude-pattern>
+	<exclude-pattern>/vendor/*</exclude-pattern>
+	<exclude-pattern>*.asset.php</exclude-pattern>
+	<exclude-pattern>*.js</exclude-pattern>
+
+</ruleset>
