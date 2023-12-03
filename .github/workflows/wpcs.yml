@@ -1,4 +1,4 @@
-name: WordPress Check Action And WPCS
+name: CF7 Coding Standards
 
 on: pull_request
 
@@ -9,22 +9,18 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Run plugin check
-        uses: swissspidy/wp-plugin-check-action@v1
-        exclude-checks: |
-          plugin_review_phpcs
-          exclude-checks: |
-            plugin_review_phpcs
-
       - name: WPCS check
         uses: 10up/wpcs-action@stable
         with:
           standard: 'WordPress'
+          use_local_config: 'true'
           extra_args: '--report-json=./phpcs.json'
           excludes: '.github/'
       - name: Update summary
         run: |
-          npx --yes github:10up/phpcs-json-to-md --path ./phpcs.json --output ./phpcs.md
+          npm i -g github:10up/phpcs-json-to-md
+          phpcs-json-to-md --path ./phpcs.json --output ./phpcs.md
           cat phpcs.md >> $GITHUB_STEP_SUMMARY
+        if: always()
 
 
